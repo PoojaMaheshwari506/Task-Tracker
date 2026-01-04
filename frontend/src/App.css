@@ -1,0 +1,98 @@
+/* ---------- BASE ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* ---------- THEMES ---------- */
+.app.light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.app.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* ---------- TOP BAR ---------- */
+.topbar {
+  height: 70px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.app.dark .topbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+}
+
+/* ---------- MAIN CONTAINER ---------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+/* ---------- INPUT ---------- */
+.task-input {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.task-input input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5f5;
+  font-size: 15px;
+}
+
+.task-input button {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
+
+/* ---------- TASK GRID ---------- */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.task-card {
+  padding: 20px;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.app.dark .task-card {
+  background: #020617;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.task-card.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}

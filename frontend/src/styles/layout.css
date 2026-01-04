@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  transition: var(--transition);
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  padding: 30px 20px;
+  background: rgba(2, 6, 23, 0.9);
+  backdrop-filter: blur(20px);
+  color: white;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.sidebar p {
+  margin: 14px 0;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sidebar p:hover,
+.sidebar .active {
+  color: var(--accent);
+  transform: translateX(6px);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}

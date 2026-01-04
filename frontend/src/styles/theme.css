@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --radius: 18px;
+  --transition: all 0.35s ease;
+}
+
+/* 🌤 LIGHT MODE */
+.app.light {
+  --bg: linear-gradient(135deg, #f8fafc, #eef2ff);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #6366f1;
+  --accent-soft: #e0e7ff;
+  --shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+}
+
+/* 🌙 DARK MODE */
+.app.dark {
+  --bg: radial-gradient(circle at top, #0f172a, #020617);
+  --card-bg: rgba(15, 23, 42, 0.75);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+ --accent: #6366f1; /* neon purple */
+--accent-soft: rgba(168, 85, 247, 0.18);
+--shadow: 0 25px 60px rgba(99, 102, 241, 0.15);
+
+}
