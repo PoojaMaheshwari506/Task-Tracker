@@ -6,14 +6,49 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+}
+
+.sidebar-menu h3 {
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.sidebar-menu h3:hover {
+  background: rgba(165, 180, 252, 0.15);
+  color: #6366f1;
+}
+
+/* LEFT INDICATOR */
+.sidebar-menu h3::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.sidebar-menu h3:hover::before {
+  background: #6366f1;
 }
 
 /* Top section */
 .sidebar-top {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  flex: 1;
+}
+
+.sidebar-bottom {
+  padding: 16px;
+}
+
+.logout-btn {
+  width: 100%;
 }
 
 .logo {
@@ -52,9 +87,11 @@
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
+  
 }
 
 .sidebar-logout:hover {
   background: rgba(255, 255, 255, 0.15);
   color: white;
 }
+

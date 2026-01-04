@@ -1,23 +1,36 @@
 import "../styles/sidebar.css";
 
-function Sidebar({ onLogout }) {
+function Sidebar({ onLogout, setActivePage }) {
   return (
     <div className="sidebar">
       <div className="sidebar-top">
-        <h2 className="logo">Tasker</h2>
+        <h2>Tasker</h2>
 
-        <nav className="menu">
-          <a className="active">Dashboard</a>
-          <a>Analytics</a>
-          <a>Settings</a>
-        </nav>
+        <ul className="sidebar-menu">
+          <h3 onClick={() => setActivePage("dashboard")}>
+            Dashboard
+          </h3>
+
+          <h3 onClick={() => setActivePage("analytics")}>
+            Analytics
+          </h3>
+
+          <h3>
+            Settings
+          </h3>
+        </ul>
       </div>
 
-      <button className="sidebar-logout" onClick={onLogout}>
-        Logout
-      </button>
+      <div className="sidebar-bottom">
+        <button className="logout-btn" onClick={onLogout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
 
 export default Sidebar;
+
+
+

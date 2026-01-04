@@ -1,0 +1,143 @@
+/* src/styles/analytics.css */
+
+.analytics-page {
+  background: linear-gradient(
+    180deg,
+    #f8f9ff,
+    #f1f3ff
+  );
+}
+
+
+.analytics-title {
+  font-size: 40px;
+  font-family: "inter", sans-serif;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* ===== KPI CARDS ===== */
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--card-bg, #ffffff);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* subtle color hints */
+.stat-card.success {
+  border-left: 4px solid #22c55e;
+}
+
+.stat-card.warning {
+  border-left: 4px solid #f97316;
+}
+
+.stat-card.info {
+  border-left: 4px solid #6366f1;
+}
+
+/* ===== GRID LAYOUT ===== */
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* ===== CHART CARDS ===== */
+
+.chart-card,
+.stat-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.08);
+}
+
+
+.chart-card.full-width {
+  grid-column: span 2;
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* ===== DONUT LEGEND ===== */
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.legend {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.legend.completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.legend.pending {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+}
+
+/* ===== EMPTY STATE ===== */
+
+.empty-chart-text {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* ===== LOADING ===== */
+
+.analytics-loading {
+  padding: 40px;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1100px) {
+  .stat-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card.full-width {
+    grid-column: span 1;
+  }
+}

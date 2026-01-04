@@ -4,10 +4,20 @@ body {
 }
 
 .app {
+  display: flex;          /* KEY LINE */
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  transition: var(--transition);
+  background: #f5f7ff;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;         /* sidebar kabhi collapse nahi hoga */
+}
+
+.main-content {
+  flex: 1;                /* bacha hua space lega */
+  padding: 24px;
+  overflow-y: auto;
 }
 
 .dashboard {
@@ -16,13 +26,13 @@ body {
 }
 
 /* SIDEBAR */
-.sidebar {
+/* .sidebar {
   width: 250px;
   padding: 30px 20px;
   background: rgba(2, 6, 23, 0.9);
   backdrop-filter: blur(20px);
   color: white;
-}
+} */
 
 .sidebar h2 {
   margin-bottom: 30px;

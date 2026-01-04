@@ -6,7 +6,7 @@ import TaskGrid from "../components/TaskGrid";
 import AddTaskModal from "../components/AddTaskModal";
 import "../styles/dashboard.css";
 
-function Dashboard({ theme, setTheme }) {
+function Dashboard({ theme, setTheme, setActivePage }) {
   const [tasks, setTasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -86,13 +86,14 @@ console.log("Dashboard rendered");
 
   return (
     <div className="dashboard">
-      <Sidebar
+      {/* <Sidebar
   onLogout={() => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
   }}
-/>
+  setActivePage={setActivePage}
+/> */}
 
       <div className="main">
         <Topbar theme={theme} setTheme={setTheme}  search={search}
