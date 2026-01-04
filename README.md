@@ -61,13 +61,13 @@ The project focuses on clean UI, secure backend, and meaningful analytics — ma
 ## ⚙️ Installation & Setup
 
 **### 🔹 Setup**
-###🔹Backend Setup
 ```bash
+###🔹Backend Setup
 cd backend
 pip install -r requirements.txt
 python app.py
 
-**### 🔹 Frontend Setup**
+### 🔹Frontend Setup
 cd frontend
 npm install
 npm run dev
