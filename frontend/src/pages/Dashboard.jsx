@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import StatCard from "../components/StatCard";
-import TaskTable from "../components/TaskTable";
+import TaskGrid from "../components/TaskGrid";
 import AddTaskModal from "../components/AddTaskModal";
-
 import "../styles/dashboard.css";
 
 function Dashboard({ theme, setTheme }) {
@@ -29,38 +28,54 @@ function Dashboard({ theme, setTheme }) {
     t.title.toLowerCase().includes(search.toLowerCase())
   );
 
-   const addTask = (title) => {
+const addTask = ({ title, priority, due_date }) => {
   fetch("http://127.0.0.1:5000/tasks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ title }),
+    body: JSON.stringify({
+      title,
+      priority,
+      due_date,
+    }),
   })
-    .then(() => fetch("http://127.0.0.1:5000/tasks"))
     .then(res => res.json())
-    .then(data => {
-      setTasks(data);
+    .then(newTask => {
+      setTasks(prev => [...prev, newTask]); // cleaner UX
       setShowModal(false);
     });
 };
 
+console.log("Dashboard rendered");
+
 
   return (
     <div className="dashboard">
-      <Sidebar />
+      <Sidebar
+  onLogout={() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload();
+  }}
+/>
+
       <div className="main">
         <Topbar theme={theme} setTheme={setTheme}  search={search}
   setSearch={setSearch} />
-      <button className="add-task-btn" onClick={() => setShowModal(true)}>
-  ➕ Add Task
+
+<button  className="add-task-btn" onClick={() => setShowModal(true)}>
+   Add Task
 </button>
-        {showModal && (
+
+{showModal && (
   <AddTaskModal
+    onAdd={addTask}   // ✅ backend connected
     onClose={() => setShowModal(false)}
-    onAdd={addTask}
   />
 )}
+
+
 
         <div className="stats">
           <StatCard title="Total Tasks" value={total} />
@@ -68,7 +83,7 @@ function Dashboard({ theme, setTheme }) {
           <StatCard title="Pending" value={pending} />
         </div>
 
-        <TaskTable tasks={filteredTasks} setTasks={setTasks} />
+        <TaskGrid tasks={filteredTasks} setTasks={setTasks} />
       </div>
     </div>
   );

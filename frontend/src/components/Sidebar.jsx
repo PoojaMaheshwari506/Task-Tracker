@@ -1,14 +1,23 @@
-function Sidebar() {
+import "../styles/sidebar.css";
+
+function Sidebar({ onLogout }) {
   return (
-    <aside className="sidebar">
-      <h2>Tasker</h2>
-      <nav>
-        <p className="active">Dashboard</p>
-        <p>Tasks</p>
-        <p>Analytics</p>
-        <p>Settings</p>
-      </nav>
-    </aside>
+    <div className="sidebar">
+      <div className="sidebar-top">
+        <h2 className="logo">Tasker</h2>
+
+        <nav className="menu">
+          <a className="active">Dashboard</a>
+          <a>Tasks</a>
+          <a>Analytics</a>
+          <a>Settings</a>
+        </nav>
+      </div>
+
+      <button className="sidebar-logout" onClick={onLogout}>
+        Logout
+      </button>
+    </div>
   );
 }
 

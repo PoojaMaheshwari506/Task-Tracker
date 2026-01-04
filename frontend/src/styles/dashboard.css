@@ -20,13 +20,13 @@
 
 .stat-card p {
   margin: 0;
-  font-size: 14px;
+  font-size: 28px;
   color: var(--muted);
 }
 
 .stat-card h2 {
   margin-top: 10px;
-  font-size: 34px;
+  font-size: 36px;
   color: var(--accent);
 }
 
@@ -40,9 +40,9 @@
 
 /* SEARCH INPUT – bigger & cleaner */
 .search-input {
-  width: 380px;              /* ⬅️ wider */
+  width: 1900px;            /* ⬅️ wider */
   padding: 14px 20px;        /* ⬅️ taller */
-  font-size: 16px;           /* ⬅️ bigger text */
+  font-size: 22px;           /* ⬅️ bigger text */
   border-radius: 999px;
   border: none;
   outline: none;
@@ -100,13 +100,20 @@ tbody tr {
 tbody tr:hover {
   background: var(--accent-soft);
 }
+.task-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 🔥 THIS */
+  margin-top: 14px;
+}
 
 .status-pill {
   padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 13px;
   cursor: pointer;
   transition: 0.25s ease;
+  margin-left: -5px;
 }
 
 .status-pill.done {
@@ -122,23 +129,35 @@ tbody tr:hover {
 .status-pill:hover {
   transform: scale(1.05);
 }
-/* Add Task Button */
 .add-task-btn {
-  margin-bottom: 30px;
-  padding: 12px 20px;
+  background: linear-gradient(135deg, #6f7cff, #8f9bff);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 28px;
   border-radius: 14px;
   border: none;
-  background: var(--accent);
-  color: white;
   cursor: pointer;
-  font-size: 14px;
-  box-shadow: var(--shadow);
-  transition: var(--transition);
+  margin: 12px 0 24px 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: all 0.25s ease;
 }
 
+/* hover = premium feel */
 .add-task-btn:hover {
-  transform: translateY(-2px) scale(1.03);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(111, 124, 255, 0.45);
 }
+
+/* click feel */
+.add-task-btn:active {
+  transform: scale(0.97);
+}
+
 
 /* Modal */
 .modal-overlay {
@@ -197,9 +216,16 @@ tbody tr:hover {
 }
 
 .delete-btn {
+  background: #f5f6fa;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
   cursor: pointer;
-  opacity: 0.4;
-  transition: 0.25s ease;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background: #eef0ff;
 }
 
 tr:hover .delete-btn {
@@ -207,6 +233,256 @@ tr:hover .delete-btn {
   transform: scale(1.15);
 }
 
-.delete-btn:hover {
-  color: red;
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
+
+.modal-card {
+  background: #fdfdff;
+  padding: 32px;
+  width: 420px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.modal-card h2 {
+  margin-bottom: 20px;
+}
+
+.modal-title-input {
+  width: 100%;
+  font-size: 50px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.modal-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.modal-row select,
+.modal-row input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+/* ---------- MODAL BACKDROP ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* ---------- MODAL CARD ---------- */
+.modal-card {
+  background: #ffffff;
+  width: 520px;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+}
+
+/* ---------- TEXT ---------- */
+.modal-title {
+  font-size: 28px;
+  font-weight: 6000;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+/* ---------- INPUTS ---------- */
+.modal-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  font-size: 20px;
+  outline: none;
+  font: bold 20px 'Segoe UI', Tahoma, Geneva, Verdana, canvas-sans;
+}
+
+.title-input {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.modal-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+/* ---------- ACTIONS ---------- */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn.primary {
+  background: #6c63ff;
+  color: white;
+}
+
+.btn.ghost {
+  background: #f3f4f6;
+  color: #111;
+}
+
+
+.btn-primary {
+  background: #6c63ff;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+}
+
+.btn-secondary {
+  background: #eee;
+  padding: 10px 18px;
+  border-radius: 10px;
+}
+
+/* Grid layout */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* Task card */
+.task-card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: 0.25s ease;
+  font-size: 24px;
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Header */
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+/* Title */
+.task-title {
+  font-size: 200px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* Status badge */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 55px;
+}
+
+.status-badge.pending {
+  background: rgba(251, 191, 36, 0.15);
+  color: #92400E;
+  
+}
+
+.status-badge.done {
+  background: rgba(34, 197, 94, 0.15);
+  color: #166534;
+}
+
+/* Delete */
+.delete-btn {
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.2s ease;
+}
+
+.task-card:hover .delete-btn {
+  opacity: 1;
+}
+
+.priority {
+  padding: px 10px;
+  border-radius: 999px;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.priority.low {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.priority.medium {
+  background: #fff8e1;
+  color: #f9a825;
+}
+
+.priority.high {
+  background: #fdecea;
+  color: #c62828;
+}
+
+.dark .priority.low {
+  background: #1f3d2b;
+  color: #9be7c4;
+}
+
+.dark .priority.medium {
+  background: #3d3320;
+  color: #ffe082;
+}
+
+.dark .priority.high {
+  background: #3d1f1f;
+  color: #ff9e9e;
+}
+
+.due-date {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-top: -22px;
+  text-align: right;
+}
+
