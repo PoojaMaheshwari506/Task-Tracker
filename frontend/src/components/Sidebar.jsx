@@ -8,7 +8,6 @@ function Sidebar({ onLogout }) {
 
         <nav className="menu">
           <a className="active">Dashboard</a>
-          <a>Tasks</a>
           <a>Analytics</a>
           <a>Settings</a>
         </nav>

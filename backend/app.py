@@ -4,6 +4,7 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
+from functools import wraps
 
 
 app = Flask(__name__)
@@ -14,12 +15,41 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SECRET_KEY"] = "super-secret-key"
 db = SQLAlchemy(app)
 
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth_header = request.headers.get("Authorization")
+
+        if not auth_header:
+            return jsonify({"error": "Token missing"}), 401
+
+        try:
+            token = auth_header.split(" ")[1]
+            data = jwt.decode(
+                token,
+                app.config["SECRET_KEY"],
+                algorithms=["HS256"]
+            )
+            current_user = User.query.get(data["user_id"])
+        except jwt.ExpiredSignatureError:
+            return jsonify({"error": "Token expired"}), 401
+        except Exception as e:
+            print("JWT ERROR:", e)
+            return jsonify({"error": "Invalid token"}), 401
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
+
+
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     completed = db.Column(db.Boolean, default=False)
     priority = db.Column(db.String(20), default="Medium")
     due_date = db.Column(db.String(20), nullable=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,9 +90,11 @@ def login():
             "user_id": user.id,
             "exp": datetime.utcnow() + timedelta(days=1)
         },
-        "SECRET_KEY",
+        app.config["SECRET_KEY"],
         algorithm="HS256"
     )
+    if isinstance(token, bytes):
+         token = token.decode("utf-8")
 
     return jsonify({
         "token": token,
@@ -75,8 +107,9 @@ def login():
 
 
 @app.route("/tasks", methods=["GET"])
-def get_tasks():
-    tasks = Task.query.all()
+@token_required
+def get_tasks(current_user):
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
     return jsonify([
         {
             "id": t.id,
@@ -90,13 +123,15 @@ def get_tasks():
 
 
 @app.route("/tasks", methods=["POST"])
-def add_task():
+@token_required
+def add_task(current_user):
     data = request.json
 
     task = Task(
         title=data["title"],
         priority=data.get("priority", "Medium"),
-        due_date=data.get("due_date")
+        due_date=data.get("due_date"),
+        user_id=current_user.id
     )
 
     db.session.add(task)
@@ -113,8 +148,9 @@ def add_task():
 
 
 @app.route("/tasks/<int:id>", methods=["PATCH"])
-def update_task(id):
-    task = Task.query.get_or_404(id)
+@token_required
+def update_task(current_user, id):
+    task = Task.query.filter_by(id=id, user_id=current_user.id).first_or_404()
     task.completed = not task.completed
     db.session.commit()
 
@@ -127,13 +163,15 @@ def update_task(id):
     })
 
 
-
 @app.route("/tasks/<int:id>", methods=["DELETE"])
-def delete_task(id):
-    task = Task.query.get_or_404(id)
+@token_required
+def delete_task(current_user, id):  
+    task = Task.query.filter_by(id=id, user_id=current_user.id).first_or_404()
     db.session.delete(task)
     db.session.commit()
+
     return jsonify({"message": "Task deleted"})
+
 
 
 

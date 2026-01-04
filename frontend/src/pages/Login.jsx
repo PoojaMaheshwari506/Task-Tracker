@@ -14,10 +14,16 @@ function Login({ onSwitch }) {
       body: JSON.stringify(form),
     })
       .then(res => res.json())
-      .then(data => {
-        saveAuth(data.token, data.user);
-        window.location.reload();
-      });
+.then(data => {
+  if (!data.token) {
+    alert(data.error || "Login failed");
+    return; // ⛔ DO NOT save invalid token
+  }
+
+  saveAuth(data.token, data.user);
+  window.location.reload();
+});
+
   };
 
 return (

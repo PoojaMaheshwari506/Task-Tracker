@@ -10,29 +10,53 @@ function Dashboard({ theme, setTheme }) {
   const [tasks, setTasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
- useEffect(() => {
-  fetch("http://127.0.0.1:5000/tasks")
-    .then((res) => res.json())
+useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.log("No token found");
+    return;
+  }
+
+  fetch("http://127.0.0.1:5000/tasks", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Unauthorized");
+      }
+      return res.json();
+    })
     .then((data) => {
       console.log("TASKS FROM BACKEND:", data);
       setTasks(data);
+    })
+    .catch((err) => {
+      console.error("Error fetching tasks:", err.message);
+      setTasks([]); // prevent crash
     });
 }, []);
+
 
 
   const total = tasks.length;
   const completed = tasks.filter(t => t.completed).length;
   const pending = total - completed;
   const [search, setSearch] = useState("");
-    const filteredTasks = tasks.filter(t =>   // ✅ ADD HERE
-    t.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredTasks = Array.isArray(tasks)? tasks.filter(t =>
+      t.title.toLowerCase().includes(search.toLowerCase())
+    )
+  : [];
+
 
 const addTask = ({ title, priority, due_date }) => {
   fetch("http://127.0.0.1:5000/tasks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify({
       title,
@@ -40,15 +64,25 @@ const addTask = ({ title, priority, due_date }) => {
       due_date,
     }),
   })
-    .then(res => res.json())
-    .then(newTask => {
-      setTasks(prev => [...prev, newTask]); // cleaner UX
+    .then(async (res) => {
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to add task");
+      }
+      return res.json();
+    })
+    .then((newTask) => {
+      setTasks((prev) => [...prev, newTask]);
       setShowModal(false);
+    })
+    .catch((err) => {
+      alert(err.message);
+      console.error("ADD TASK ERROR:", err.message);
     });
 };
 
-console.log("Dashboard rendered");
 
+console.log("Dashboard rendered");
 
   return (
     <div className="dashboard">
