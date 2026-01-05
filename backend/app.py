@@ -11,10 +11,10 @@ app = Flask(__name__)
 
 CORS(
     app,
-    resources={r"/*": {"origins": "*"}},
+    origins=["https://task-tracker-dun-eight.vercel.app"],
     supports_credentials=True,
-    methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"]
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
 )
 
 
@@ -67,9 +67,9 @@ class User(db.Model):
 
 @app.after_request
 def after_request(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
-    response.headers.add("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,OPTIONS")
+    response.headers["Access-Control-Allow-Origin"] = "https://task-tracker-dun-eight.vercel.app"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,PATCH,DELETE,OPTIONS"
     return response
 
 @app.route("/signup", methods=["POST"])
