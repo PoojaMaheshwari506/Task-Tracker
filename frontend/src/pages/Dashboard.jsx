@@ -18,7 +18,7 @@ useEffect(() => {
     return;
   }
 
-  fetch("https://tasker-backend.onrender.com", {
+  fetch("https://tasker-backend-4xbv.onrender.com", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -52,7 +52,7 @@ useEffect(() => {
 
 
 const addTask = ({ title, priority, due_date }) => {
-  fetch("https://tasker-backend.onrender.com", {
+  fetch("https://tasker-backend-4xbv.onrender.com", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

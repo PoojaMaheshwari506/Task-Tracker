@@ -9,7 +9,7 @@ function Signup({ onSwitch }) {
   });
 
 const submit = () => {
-  fetch("https://tasker-backend.onrender.com/signup", {
+  fetch("https://tasker-backend-4xbv.onrender.com/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
