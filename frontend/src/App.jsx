@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
 import "./styles/theme.css";
 import "./styles/layout.css";
+import { useState } from "react";
 
 function App() {
   const [theme, setTheme] = useState("light");
