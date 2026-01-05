@@ -3,9 +3,12 @@
   height: 100vh;
   background: #0f172a;
   color: white;
-  padding: 24px;
   display: flex;
   flex-direction: column;
+}
+
+.sidebar-top {
+  padding: 24px;
 }
 
 .sidebar-menu h3 {
@@ -21,7 +24,6 @@
   color: #6366f1;
 }
 
-/* LEFT INDICATOR */
 .sidebar-menu h3::before {
   content: "";
   position: absolute;
@@ -38,13 +40,8 @@
   background: #6366f1;
 }
 
-/* Top section */
-.sidebar-top {
-  flex: 1;
-}
-
 .sidebar-bottom {
-  padding: 16px;
+  padding: 16px 24px;
 }
 
 .logout-btn {
@@ -55,43 +52,3 @@
   font-size: 36px;
   font-weight: 600;
 }
-
-/* Menu */
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.menu a {
-  color: #c7d2fe;
-  text-decoration: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.menu a.active {
-  emphasize: true;
-  color: white;
-  font-weight: 500;
-}
-
-/* Logout bottom */
-.sidebar-logout {
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: #c7d2fe;
-  padding: 14px;
-  text-align: center;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  
-}
-
-.sidebar-logout:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-}
-
