@@ -9,13 +9,14 @@ from functools import wraps
 
 app = Flask(__name__)
 
+from flask_cors import CORS
+
 CORS(
     app,
     origins=["https://task-tracker-dun-eight.vercel.app"],
-    supports_credentials=True,
-    allow_headers=["Content-Type", "Authorization"],
-    methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
+    supports_credentials=True
 )
+
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
@@ -64,6 +65,13 @@ class User(db.Model):
     name = db.Column(db.String(100))
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+
+@app.route("/login", methods=["OPTIONS"])
+@app.route("/signup", methods=["OPTIONS"])
+@app.route("/tasks", methods=["OPTIONS"])
+@app.route("/tasks/<int:id>", methods=["OPTIONS"])
+def options_handler(id=None):
+    return "", 200
 
 @app.after_request
 def after_request(response):
