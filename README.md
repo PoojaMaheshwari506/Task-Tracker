@@ -83,3 +83,17 @@ On login, a JWT token is generated
 Token is stored in localStorage
 
 All protected API routes require Authorization: Bearer <token>
+```
+
+## 🔗 Live Demo
+> Deployed using **Vercel (Frontend)** and **Render (Backend)**.
+
+> 👉 Frontend: https://task-tracker-dun-eight.vercel.app
+
+> 👉 Backend API: https://tasker-backend-4xbv.onrender.com
+
+> ⚠️ Note: Backend may take a few seconds to wake up on first request (Render free tier).
+ 
+
+
+
