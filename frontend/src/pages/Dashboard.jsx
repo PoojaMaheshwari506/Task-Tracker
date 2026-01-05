@@ -52,33 +52,33 @@ useEffect(() => {
 
 
 const addTask = ({ title, priority, due_date }) => {
-  fetch("https://tasker-backend-4xbv.onrender.com", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({
-      title,
-      priority,
-      due_date,
-    }),
+fetch("https://tasker-backend-4xbv.onrender.com/tasks", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+  body: JSON.stringify({
+    title,
+    priority,
+    due_date,
+  }),
+})
+  .then(async (res) => {
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to add task");
+    }
+    return data;
   })
-    .then(async (res) => {
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Failed to add task");
-      }
-      return res.json();
-    })
-    .then((newTask) => {
-      setTasks((prev) => [...prev, newTask]);
-      setShowModal(false);
-    })
-    .catch((err) => {
-      alert(err.message);
-      console.error("ADD TASK ERROR:", err.message);
-    });
+  .then((newTask) => {
+    setTasks((prev) => [...prev, newTask]);
+    setShowModal(false);
+  })
+  .catch((err) => {
+    alert(err.message);
+    console.error(err);
+  });
 };
 
 
