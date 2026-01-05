@@ -8,7 +8,15 @@ from functools import wraps
 
 
 app = Flask(__name__)
-CORS(app)
+
+CORS(
+    app,
+    resources={r"/*": {"origins": "*"}},
+    supports_credentials=True,
+    methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"]
+)
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
