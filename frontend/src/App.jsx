@@ -12,6 +12,22 @@ function App() {
   const [theme, setTheme] = useState("light");
   const [showSignup, setShowSignup] = useState(false);
   const [activePage, setActivePage] = useState("dashboard"); // 👈 NEW
+  const [tasks, setTasks] = useState([]);
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  fetch("https://tasker-backend-4xbv.onrender.com/tasks", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(res => res.json())
+    .then(data => setTasks(data))
+    .catch(() => setTasks([]));
+}, []);
+
 
   if (!isLoggedIn()) {
     return showSignup ? (
@@ -33,10 +49,16 @@ return (
 
     <div className="main-content">
       {activePage === "dashboard" && (
-        <Dashboard theme={theme} setTheme={setTheme} />
-      )}
+  <Dashboard
+    tasks={tasks}
+    setTasks={setTasks}
+    setActivePage={setActivePage}
+  />
+)}
 
-      {activePage === "analytics" && <Analytics />}
+{activePage === "analytics" && (
+  <Analytics tasks={tasks} setActivePage={setActivePage} />
+)}
     </div>
   </div>
 );

@@ -7,7 +7,7 @@ import AddTaskModal from "../components/AddTaskModal";
 import "../styles/dashboard.css";
 
 function Dashboard({ theme, setTheme, setActivePage }) {
-  const [tasks, setTasks] = useState([]);
+ // const [tasks, setTasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
 useEffect(() => {
