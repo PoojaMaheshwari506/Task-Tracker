@@ -63,14 +63,6 @@ function Dashboard({ theme, setTheme, setActivePage }) {
 
   return (
     <div className="dashboard">
-      <Sidebar
-        setActivePage={setActivePage}
-        onLogout={() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          window.location.reload();
-        }}
-      />
 
       <div className="main">
         <Topbar
