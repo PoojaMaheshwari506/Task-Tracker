@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { isLoggedIn } from "./auth/auth";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -7,7 +7,6 @@ import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
 import "./styles/theme.css";
 import "./styles/layout.css";
-import { useState } from "react";
 
 function App() {
   const [theme, setTheme] = useState("light");
