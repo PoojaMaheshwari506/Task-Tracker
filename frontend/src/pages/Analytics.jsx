@@ -13,7 +13,7 @@ function Analytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/tasks", {
+    fetch("https://tasker-backend.onrender.com", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

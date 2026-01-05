@@ -18,7 +18,7 @@ useEffect(() => {
     return;
   }
 
-  fetch("http://127.0.0.1:5000/tasks", {
+  fetch("https://tasker-backend.onrender.com", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -52,7 +52,7 @@ useEffect(() => {
 
 
 const addTask = ({ title, priority, due_date }) => {
-  fetch("http://127.0.0.1:5000/tasks", {
+  fetch("https://tasker-backend.onrender.com", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

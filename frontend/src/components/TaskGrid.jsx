@@ -3,7 +3,7 @@ import TaskCard from "./TaskCard";
 function TaskGrid({ tasks, setTasks }) {
 
   const toggleStatus = (id) => {
-    fetch(`http://127.0.0.1:5000/tasks/${id}`, {
+    fetch(`https://tasker-backend.onrender.com/tasks/${id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -31,7 +31,7 @@ function TaskGrid({ tasks, setTasks }) {
   };
 
   const deleteTask = (id) => {
-    fetch(`http://127.0.0.1:5000/tasks/${id}`, {
+    fetch(`https://tasker-backend.onrender.com/tasks/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

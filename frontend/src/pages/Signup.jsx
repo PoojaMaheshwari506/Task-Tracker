@@ -8,13 +8,23 @@ function Signup({ onSwitch }) {
     password: "",
   });
 
-  const submit = () => {
-    fetch("http://127.0.0.1:5000/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    }).then(() => onSwitch());
-  };
+const submit = () => {
+  fetch("https://tasker-backend.onrender.com/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Signup failed");
+      }
+      onSwitch(); // switch only if signup success
+    })
+    .catch((err) => {
+      alert(err.message);
+    });
+};
 
   return (
     <div className="auth-wrapper">
