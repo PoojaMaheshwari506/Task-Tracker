@@ -41,7 +41,7 @@ function Analytics() {
 
   return (
     <div className="analytics-page">
-      <h1 className="analytics-title">Analytics</h1>
+    
 
       {/* KPI cards */}
       <StatCards tasks={tasks} />

@@ -105,7 +105,7 @@ console.log("Dashboard rendered");
 
 {showModal && (
   <AddTaskModal
-    onAdd={addTask}   // ✅ backend connected
+    onAdd={addTask}   // backend connected
     onClose={() => setShowModal(false)}
   />
 )}
