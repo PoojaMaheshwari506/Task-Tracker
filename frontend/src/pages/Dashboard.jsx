@@ -7,110 +7,89 @@ import AddTaskModal from "../components/AddTaskModal";
 import "../styles/dashboard.css";
 
 function Dashboard({ theme, setTheme, setActivePage }) {
- // const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);   // ✅ VERY IMPORTANT
   const [showModal, setShowModal] = useState(false);
-
-useEffect(() => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    console.log("No token found");
-    return;
-  }
-
-  fetch("https://tasker-backend-4xbv.onrender.com", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Unauthorized");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      console.log("TASKS FROM BACKEND:", data);
-      setTasks(data);
-    })
-    .catch((err) => {
-      console.error("Error fetching tasks:", err.message);
-      setTasks([]); // prevent crash
-    });
-}, []);
-
-
-
-  const total = tasks.length;
-  const completed = tasks.filter(t => t.completed).length;
-  const pending = total - completed;
   const [search, setSearch] = useState("");
-  const filteredTasks = Array.isArray(tasks)? tasks.filter(t =>
-      t.title.toLowerCase().includes(search.toLowerCase())
-    )
-  : [];
 
+  // 🔹 FETCH TASKS
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-const addTask = ({ title, priority, due_date }) => {
-fetch("https://tasker-backend-4xbv.onrender.com/tasks", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-  body: JSON.stringify({
-    title,
-    priority,
-    due_date,
-  }),
-})
-  .then(async (res) => {
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || "Failed to add task");
-    }
-    return data;
-  })
-  .then((newTask) => {
-    setTasks((prev) => [...prev, newTask]);
-    setShowModal(false);
-  })
-  .catch((err) => {
-    alert(err.message);
-    console.error(err);
-  });
-};
+    fetch("https://tasker-backend-4xbv.onrender.com/tasks", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
+      .then((data) => {
+        setTasks(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error(err.message);
+        setTasks([]);
+      });
+  }, []);
 
+  // 🔹 STATS
+  const total = tasks.length;
+  const completed = tasks.filter((t) => t.completed).length;
+  const pending = total - completed;
 
-console.log("Dashboard rendered");
+  const filteredTasks = tasks.filter((t) =>
+    t.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // 🔹 ADD TASK
+  const addTask = ({ title, priority, due_date }) => {
+    fetch("https://tasker-backend-4xbv.onrender.com/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ title, priority, due_date }),
+    })
+      .then((res) => res.json())
+      .then((newTask) => {
+        setTasks((prev) => [...prev, newTask]);
+        setShowModal(false);
+      })
+      .catch((err) => alert(err.message));
+  };
 
   return (
     <div className="dashboard">
-      {/* <Sidebar
-  onLogout={() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.reload();
-  }}
-  setActivePage={setActivePage}
-/> */}
+      <Sidebar
+        setActivePage={setActivePage}
+        onLogout={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.reload();
+        }}
+      />
 
       <div className="main">
-        <Topbar theme={theme} setTheme={setTheme}  search={search}
-  setSearch={setSearch} />
+        <Topbar
+          theme={theme}
+          setTheme={setTheme}
+          search={search}
+          setSearch={setSearch}
+        />
 
-<button  className="add-task-btn" onClick={() => setShowModal(true)}>
-   Add Task
-</button>
+        <button className="add-task-btn" onClick={() => setShowModal(true)}>
+          Add Task
+        </button>
 
-{showModal && (
-  <AddTaskModal
-    onAdd={addTask}   // backend connected
-    onClose={() => setShowModal(false)}
-  />
-)}
-
-
+        {showModal && (
+          <AddTaskModal
+            onAdd={addTask}
+            onClose={() => setShowModal(false)}
+          />
+        )}
 
         <div className="stats">
           <StatCard title="Total Tasks" value={total} />
