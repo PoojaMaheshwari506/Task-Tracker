@@ -13,8 +13,8 @@ from flask_cors import CORS
 
 CORS(
     app,
-    origins=["https://task-tracker-dun-eight.vercel.app"],
-    supports_credentials=True
+    resources={r"/*": {"origins": "https://task-tracker-dun-eight.vercel.app"}},
+    supports_credentials=False
 )
 
 
